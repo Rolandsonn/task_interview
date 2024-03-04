@@ -5,6 +5,7 @@ const refreshBtn = document.getElementById("refresh");
 const sortSelect = document.getElementById("sortSelect");
 let usersData = [];
 
+/* Рендеринг пользователей */
 const renderData = (usersData) => {
   tbody.innerHTML = "";
 
@@ -27,13 +28,14 @@ const renderData = (usersData) => {
   });
 };
 
+/* Запрос на сервер */
 const fetchData = async () => {
   try {
     await fetch(API)
       .then((response) => response.json())
       .then((data) => {
         usersData = data;
-
+        filter.value = "";
         renderData(usersData);
       })
       .catch((err) => console.error(err));
@@ -43,12 +45,14 @@ const fetchData = async () => {
   }
 };
 
+/* Сортировка users */
 const sortUsers = () => {
   const parameter = sortSelect.value;
   usersData.sort((a, b) => a[parameter].localeCompare(b[parameter]));
   renderData(usersData);
 };
 
+/* Фильтрация users*/
 const filterUsers = () => {
   const searchTerm = filter.value.toLowerCase();
   const parameter = sortSelect.value;
